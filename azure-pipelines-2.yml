@@ -3,20 +3,33 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+trigger:
+- master
+
+pool:
+  name: self-hosted-agent
+
 stages:
 - stage: Build
+  displayName: "Build Stage"
   jobs:
   - job: BuildJob
     steps:
-    - script: echo "Build completed"
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        cd demo1
+        npm install
+        npm run build
+      displayName: 'Build Application'
 
 - stage: Release
+  displayName: "Release Stage"
   dependsOn: Build
   jobs:
-  - deployment: DeployJob
-    environment: dev
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: echo "Application released successfully"
+  - job: ReleaseJob
+    steps:
+    - script: echo "Application released successfully"
