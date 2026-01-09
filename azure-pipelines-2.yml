@@ -4,19 +4,19 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 stages:
--stage: Build
- jobs:
- - job:BuildJob
-   steps:
-   - script: echo "Build completed"
+- stage: Build
+  jobs:
+  - job: BuildJob
+    steps:
+    - script: echo "Build completed"
 
--stage: Release
- dependsOn: Build
- jobs:
- -deployment: DeployJob
-  environment: dev
-  strategy:
-   runOnce:
-    deploy:
-     steps:
-     - script: echo "Application released successfully"
+- stage: Release
+  dependsOn: Build
+  jobs:
+  - deployment: DeployJob
+    environment: dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo "Application released successfully"
