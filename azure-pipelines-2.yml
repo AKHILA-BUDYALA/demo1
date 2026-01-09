@@ -21,9 +21,7 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
-        cd demo1
-        npm install
-        npm run build
+        
       displayName: 'Build Application'
 
 - stage: Release
